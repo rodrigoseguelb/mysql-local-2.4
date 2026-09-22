@@ -73,12 +73,12 @@ jobs:
 
       # ── 6. Escanear dependencias con Snyk ──
       - name: Escaneo de vulnerabilidades Snyk (dependencias)
-        uses: snyk/actions/maven@master
         continue-on-error: true           # no bloquea el pipeline si hay vulnerabilidades
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high  # solo reporta Critical y High
+        run: |
+          npm install -g snyk
+          snyk test --severity-threshold=high --all-projects
 
       # ── 7. Compilar el .jar ──
       - name: Build del proyecto
