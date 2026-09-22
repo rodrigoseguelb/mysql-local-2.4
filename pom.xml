@@ -14,8 +14,8 @@
     <groupId>com.example</groupId>
     <artifactId>bdget</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>bdget</name>
-    <description>API REST de Estudiantes - Spring Boot + MySQL</description>
+    <name>mysql-local-2.4</name>
+    <description>API REST de Estudiantes - Spring Boot + MySQL + SonarCloud + Snyk</description>
 
     <properties>
         <java.version>17</java.version>
@@ -27,6 +27,7 @@
         <sonar.projectKey>rodrigoseguelb_mysql-local-2.4</sonar.projectKey>
         <sonar.organization>rodrigoseguelb</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectName>mysql-local-2.4</sonar.projectName>
     </properties>
 
     <dependencies>
