@@ -106,10 +106,11 @@
             </plugin>
 
             <!-- SonarCloud: análisis de calidad de código -->
+            <!-- v3.9.x es la última versión compatible con Java 17 -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.11.0.3922</version>
+                <version>3.9.1.2184</version>
             </plugin>
 
             <!-- JaCoCo: cobertura de código en los tests -->
