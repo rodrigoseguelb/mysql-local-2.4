@@ -34,11 +34,13 @@ jobs:
         with:
           fetch-depth: 0          # SonarCloud necesita el historial completo
 
-      # ── 2. Configurar Java 17 ──
-      - name: Configurar Java 17
+      # ── 2. Configurar Java 21 ──
+      # SonarCloud requiere Java 21+ para ejecutar el scanner.
+      # El código se sigue compilando en bytecode Java 17 (ver pom.xml).
+      - name: Configurar Java 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
 
