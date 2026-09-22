@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  # ─────────────────────────────────────────────
+  # 1. Base de Datos MySQL
+  # ─────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: bdget-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass       # contraseña del usuario root
+      MYSQL_DATABASE: bdget_db             # base de datos que se crea automáticamente
+      MYSQL_USER: bdget_user               # usuario de la app
+      MYSQL_PASSWORD: bdget_pass           # contraseña del usuario de la app
+    ports:
+      - "3306:3306"                        # expone MySQL al host (para conectarse con DBeaver, etc.)
+    volumes:
+      - mysql_data:/var/lib/mysql          # los datos persisten aunque el contenedor se detenga
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -proot_pass || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # 2. Aplicación Spring Boot
+  # ─────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bdget-app
+    restart: always
+    ports:
+      - "8080:8080"                        # la API queda disponible en http://localhost:8080
+    environment:
+      # Sobreescribe los valores de application.properties
+      - spring.datasource.url=jdbc:mysql://mysql:3306/bdget_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - spring.datasource.username=bdget_user
+      - spring.datasource.password=bdget_pass
+    depends_on:
+      mysql:
+        condition: service_healthy         # espera que MySQL esté listo antes de arrancar
+
+volumes:
+  mysql_data:                              # volumen nombrado para persistir datos de MySQL
